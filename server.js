@@ -93,13 +93,9 @@ var numeroTres = -987;
                     numeroTres = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[3]/div/div/div')).getText();
                 }
 
-                (ultimoCache !== numeroUltimo
-                    || doisCache !== numeroDois
-                    || tresCache !== numeroTres) && console.log(`--------------------\n\nCache antigo: ${ultimoCache} - ${doisCache}- ${tresCache}\nCache atual: ${numeroUltimo} - ${numeroDois} - ${numeroTres}\n`);
-
             }
         } catch (e) {
-            console.log("DEU RUIM");
+            console.log(e);
         }
 
         if (ultimoCache === numeroUltimo &&
