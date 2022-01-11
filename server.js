@@ -111,7 +111,7 @@ var numeroTres = -987;
         } else {
             const now = new Date();
 
-            if (numeroUltimo > 0) {
+            if (numeroUltimo >= 0) {
                 var resultado = {
                     "resultado": numeroUltimo
                 };
