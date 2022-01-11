@@ -113,7 +113,7 @@ var numeroTres = -987;
 
             if (numeroUltimo >= 0) {
                 var resultado = {
-                    "resultado": numeroUltimo
+                    "result": numeroUltimo
                 };
 
                 request({
@@ -124,16 +124,6 @@ var numeroTres = -987;
                 }, function (error, response, body) {
                     console.log("Adicionando", numeroUltimo);
                 });
-
-                request({
-                    url: `http://localhost:${port}/hoje`,
-                    method: "POST",
-                    json: true,   // <--Very important!!!
-                    body: resultado
-                }, function (error, response, body) {
-                    console.log("Adicionando", numeroUltimo);
-                });
-
             }
 
             ultimoCache = numeroUltimo;
