@@ -117,7 +117,7 @@ var numeroTres = -987;
                 };
 
                 request({
-                    url: "http://localhost:3000/resultados",
+                    url: `http://localhost:${port}/resultados`,
                     method: "POST",
                     json: true,   // <--Very important!!!
                     body: resultado
@@ -140,5 +140,5 @@ var numeroTres = -987;
 })()
 
 setInterval(function () {
-    https.get("https://webcrepe.herokuapp.com");
+    https.get("https://webcrepe-mongodb.herokuapp.com");
 }, 20 * 60 * 1000); // every 20 minutes
