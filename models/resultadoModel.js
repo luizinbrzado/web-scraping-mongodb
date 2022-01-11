@@ -10,11 +10,15 @@ const Schema = mongoose.Schema;
 
 // Create Schema Instance and add schema propertise
 const resultadoSchema = new Schema({
-    horario: {
-        type: Date,
-        default: Date.now
+    date: {
+        type: String,
+        default: now.toLocaleDateString('BRT')
     },
-    resultado: {
+    time: {
+        type: String,
+        default: now.toLocaleTimeString('BRT').slice(0,5)
+    },
+    result: {
         type: Number,
         required: true
     }

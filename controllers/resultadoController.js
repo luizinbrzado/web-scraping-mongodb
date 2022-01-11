@@ -13,6 +13,26 @@ exports.listAll = (req, res) => {
     });
 };
 
+exports.listAllByDate = (req, res) => {
+    Resultado.find({ date: `${req.params.dia}/${req.params.mes}/${req.params.ano}` }, (err, todo) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.status(200).json(todo);
+    });
+};
+
+exports.listAllByTime = (req, res) => {
+    Resultado.find({ time: `${req.params.hora}:${req.params.minuto}` }, (err, todo) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.status(200).json(todo);
+    });
+};
+
+
+
 // createNewTodo function - To create new todo
 exports.createNew = (req, res) => {
     let newResultado = new Resultado(req.body);
