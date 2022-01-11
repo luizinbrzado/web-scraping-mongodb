@@ -122,10 +122,9 @@ var numeroTres = -987;
                     json: true,   // <--Very important!!!
                     body: resultado
                 }, function (error, response, body) {
-                    console.log(body);
+                    console.log("Adicionando", numeroUltimo);
                 });
 
-                console.log("Adicionando", numeroUltimo);
             }
 
 
