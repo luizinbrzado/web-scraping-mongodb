@@ -96,6 +96,7 @@ var numeroTres = -987;
             }
         } catch (e) {
             console.log(e);
+            process.exit(0)
         }
 
         if (ultimoCache === numeroUltimo &&
