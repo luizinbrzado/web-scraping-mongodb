@@ -75,7 +75,6 @@ var numeroQuatro = -987;
     while (true) {
         const now = new Date();
         now.setUTCMilliseconds(-3600 * 3 * 1000);
-        console.log(now.toLocaleTimeString('pt-br'));
 
         if (now.toLocaleTimeString('pt-br') > '23:59:55') {
             process.exit(0);
@@ -134,7 +133,8 @@ var numeroQuatro = -987;
                 }, function (error, response, body) {
                 });
 
-                console.log("Adicionando", numeroUltimo);
+
+                console.log("Adicionando", numeroUltimo, now.toLocaleTimeString('pt-br'));
             }
 
             ultimoCache = numeroUltimo;
