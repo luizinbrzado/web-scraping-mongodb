@@ -75,9 +75,9 @@ var numeroQuatro = -987;
     while (true) {
         const now = new Date();
         now.setUTCMinutes(-180);
-        console.log(now.toLocaleTimeString('BRT'));
+        console.log(now.toLocaleTimeString('pt-br'));
 
-        if (now.toLocaleTimeString('BRT') > '23:59:55') {
+        if (now.toLocaleTimeString('pt-br') > '23:59:55') {
             process.exit(0);
         }
 
