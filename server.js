@@ -73,11 +73,13 @@ var numeroQuatro = -987;
     await driver.sleep(3000)
 
     while (true) {
-        console.log(new Date().toLocaleTimeString());
+        const now = new Date();
+        now.setUTCMinutes(-180);
+        console.log(now.toLocaleTimeString('BRT'));
 
-        // if (new Date().toLocaleTimeString() > '23:59:55') {
-        //     process.exit(0);
-        // }
+        if (now.toLocaleTimeString('BRT') > '23:59:55') {
+            process.exit(0);
+        }
 
         await driver.sleep(500)
 
@@ -112,6 +114,7 @@ var numeroQuatro = -987;
 
             if (numeroUltimo >= 0) {
                 var resultado = {
+                    "time": now.toLocaleTimeString('BRT').slice(0, 5),
                     "result": numeroUltimo
                 };
 
@@ -121,7 +124,6 @@ var numeroQuatro = -987;
                     json: true,   // <--Very important!!!
                     body: resultado
                 }, function (error, response, body) {
-                    console.log("Adicionando", numeroUltimo);
                 });
 
                 request({
@@ -130,8 +132,9 @@ var numeroQuatro = -987;
                     json: true,   // <--Very important!!!
                     body: resultado
                 }, function (error, response, body) {
-                    console.log("Adicionando", numeroUltimo);
                 });
+
+                console.log("Adicionando", numeroUltimo);
             }
 
             ultimoCache = numeroUltimo;
