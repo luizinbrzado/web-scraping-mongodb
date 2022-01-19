@@ -73,7 +73,12 @@ var numeroQuatro = -987;
     await driver.sleep(3000)
 
     while (true) {
-        console.log(new Date().toLocaleTimeString('BRT'));
+        console.log(new Date().toLocaleTimeString());
+
+        // if (new Date().toLocaleTimeString() > '23:59:55') {
+        //     process.exit(0);
+        // }
+
         await driver.sleep(500)
 
         try {
@@ -134,9 +139,6 @@ var numeroQuatro = -987;
             tresCache = numeroTres;
             quatroCache = numeroQuatro;
 
-            if (new Date().toLocaleTimeString('BRT') > '23:59:55') {
-                process.exit(0);
-            }
         }
 
         await new Promise(resolve => setTimeout(resolve, 1000))
