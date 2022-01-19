@@ -73,6 +73,7 @@ var numeroQuatro = -987;
     await driver.sleep(3000)
 
     while (true) {
+        console.log(new Date().toLocaleTimeString('BRT'));
         await driver.sleep(500)
 
         try {
