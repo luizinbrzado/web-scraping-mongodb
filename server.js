@@ -133,7 +133,7 @@ var numeroQuatro = -987;
             tresCache = numeroTres;
             quatroCache = numeroQuatro;
 
-            if (new Date().toLocaleTimeString('BRT') > '23:59:25') {
+            if (new Date().toLocaleTimeString('BRT') > '23:59:55') {
                 process.exit(0);
             }
         }
