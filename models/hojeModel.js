@@ -1,6 +1,7 @@
 'use strict';
 
 const now = new Date();
+now.setUTCMilliseconds(-3600 * 1000 * 3);
 
 // Import mongoose
 const mongoose = require("mongoose");
@@ -21,4 +22,4 @@ const resultadoSchema = new Schema({
 });
 
 // create and export model
-module.exports = mongoose.model(`${now.toLocaleDateString('BRT').replace(/\//g, '_')}`, resultadoSchema);
+module.exports = mongoose.model(`${now.toLocaleDateString('pt-br').replace(/\//g, '_')}`, resultadoSchema);

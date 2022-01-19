@@ -114,7 +114,7 @@ var numeroQuatro = -987;
 
             if (numeroUltimo >= 0) {
                 var resultado = {
-                    "time": now.toLocaleTimeString('BRT').slice(0, 5),
+                    "time": now.toLocaleTimeString('pt-br').slice(0, 5),
                     "result": numeroUltimo
                 };
 
