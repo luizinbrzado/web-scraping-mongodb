@@ -42,10 +42,12 @@ console.log("Rodando web scraping");
 var ultimoCache = -123;
 var doisCache = -123;
 var tresCache = -123;
+var quatroCache = -123;
 
 var numeroUltimo = -987;
 var numeroDois = -987;
 var numeroTres = -987;
+var numeroQuatro = -987;
 
 (async function blazeBot() {
 
@@ -78,21 +80,15 @@ var numeroTres = -987;
             var classUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[1]/div/div')).getAttribute('class');
             var classDois = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[2]/div/div')).getAttribute('class');
             var classTres = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[3]/div/div')).getAttribute('class');
+            var classQuatro = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[4]/div/div')).getAttribute('class');
 
             if (isCompleted.includes('complete')) {
                 await driver.sleep(2000)
 
-                if (classUltimo.includes('white') || classDois.includes('white') || classTres.includes('white')) {
-                    classUltimo.includes('white') ? numeroUltimo = '0' : numeroUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[1]/div/div/div')).getText();
-                    classDois.includes('white') ? numeroDois = '0' : numeroDois = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[2]/div/div/div')).getText();
-                    classTres.includes('white') ? numeroTres = '0' : numeroTres = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[3]/div/div/div')).getText();
-
-                } else {
-                    numeroUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[1]/div/div/div')).getText();
-                    numeroDois = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[2]/div/div/div')).getText();
-                    numeroTres = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[3]/div/div/div')).getText();
-                }
-
+                classUltimo.includes('white') ? numeroUltimo = '0' : numeroUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[1]/div/div/div')).getText();
+                classDois.includes('white') ? numeroDois = '0' : numeroDois = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[2]/div/div/div')).getText();
+                classTres.includes('white') ? numeroTres = '0' : numeroTres = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[3]/div/div/div')).getText();
+                classQuatro.includes('white') ? numeroQuatro = '0' : numeroQuatro = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[4]/div/div/div')).getText();
             }
         } catch (e) {
             console.log(e);
@@ -101,12 +97,12 @@ var numeroTres = -987;
 
         if (ultimoCache === numeroUltimo &&
             doisCache === numeroDois &&
-            tresCache === numeroTres) {
+            tresCache === numeroTres &&
+            quatroCache === numeroQuatro) {
 
             await new Promise(resolve => setTimeout(resolve, 1000))
 
         } else {
-            const now = new Date();
 
             if (numeroUltimo >= 0) {
                 var resultado = {
@@ -121,14 +117,29 @@ var numeroTres = -987;
                 }, function (error, response, body) {
                     console.log("Adicionando", numeroUltimo);
                 });
+
+                request({
+                    url: `http://localhost:${port}/hoje`,
+                    method: "POST",
+                    json: true,   // <--Very important!!!
+                    body: resultado
+                }, function (error, response, body) {
+                    console.log("Adicionando", numeroUltimo);
+                });
             }
 
             ultimoCache = numeroUltimo;
             doisCache = numeroDois;
             tresCache = numeroTres;
+            quatroCache = numeroQuatro;
+
+            if (new Date().toLocaleTimeString('BRT') > '23:59:25') {
+                process.exit(0);
+            }
         }
 
         await new Promise(resolve => setTimeout(resolve, 1000))
+
     }
 })()
 

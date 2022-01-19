@@ -13,12 +13,17 @@ module.exports = function (app) {
         .post(resultados.createNew);
 
     app
-        .route("/dia/:dia/:mes/:ano")
-        .get(resultados.listAllByDate)
+        .route("/hoje")
+        .get(resultados.listAllToday)
+        .post(resultados.createNewToday);
 
-    app
-        .route("/hora/:hora/:minuto")
-        .get(resultados.listAllByTime)
+    // app
+    //     .route("/dia/:dia/:mes/:ano")
+    //     .get(resultados.listAllByDate)
+
+    // app
+    //     .route("/hora/:hora/:minuto")
+    //     .get(resultados.listAllByTime)
 
     // put and delete request for /todos endpoints
     // app
