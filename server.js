@@ -59,61 +59,48 @@ var numeroUltimo = -987;
         .setChromeService(serviceBuilder)
         .build();
 
-    await driver.get('https://blaze.com/pt/games/double')
+    await driver.get('https://blaze.com/pt/games/crash')
     await driver.manage().window().maximize()
 
     await driver.sleep(5000)
-
-    var i = 0;
+    var idCache = '';
 
     while (true) {
         const now = new Date();
         now.setUTCMilliseconds(-3600 * 3 * 1000);
 
-        if (now.toLocaleTimeString('pt-br') > '23:59:55') {
+        if (now.toLocaleTimeString('pt-br') > '23:59:50') {
             process.exit(0);
         }
 
-        await driver.sleep(500)
+        await driver.sleep(1000)
 
         try {
-            var isCompleted = await driver.findElement(webdriver.By.xpath('//*[@id="roulette"]')).getAttribute('class');
+            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getId()
 
-            if (isCompleted.includes('complete')) {
-                await driver.sleep(2000)
-                var classUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[1]/div/div')).getAttribute('class');
-                classUltimo.includes('white') ? numeroUltimo = '0' : numeroUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="roulette-recent"]/div/div[1]/div[1]/div/div/div')).getText();
+            if (idUltimo !== idCache) {
+                var ultimoResultado = await (await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getText()).slice(0, -1)
+                idCache = idUltimo;
 
-                if (numeroUltimo >= 0) {
-                    var resultado = {
-                        "time": now.toLocaleTimeString('pt-br').slice(0, 5),
-                        "result": numeroUltimo
-                    };
+                var resultado = {
+                    "time": now.toLocaleTimeString('pt-br').slice(0, 5),
+                    "result": ultimoResultado
+                };
 
-                    request({
-                        url: `http://localhost:${port}/resultados`,
-                        method: "POST",
-                        json: true,   // <--Very important!!!
-                        body: resultado
-                    }, function (error, response, body) {
-                    });
+                request({
+                    url: `http://localhost:${port}/hoje`,
+                    method: "POST",
+                    json: true,   // <--Very important!!!
+                    body: resultado
+                }, function (error, response, body) {
+                });
 
-                    request({
-                        url: `http://localhost:${port}/hoje`,
-                        method: "POST",
-                        json: true,   // <--Very important!!!
-                        body: resultado
-                    }, function (error, response, body) {
-                    });
-
-
-                    console.log("Adicionando", numeroUltimo, now.toLocaleTimeString('pt-br'));
-                    await driver.sleep(25 * 1000)
-                }
+                console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
             }
         } catch (e) {
-            console.log("Deu erro");
-            process.exit(0)
+            console.log(e);
+            console.log("Deu ruim");
+            process.exit(0);
         }
 
     }
