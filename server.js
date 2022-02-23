@@ -79,7 +79,9 @@ var numeroUltimo = -987;
             var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getId()
 
             if (idUltimo !== idCache) {
-                var ultimoResultado = await (await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getText()).slice(0, -1)
+                await driver.sleep(2000)
+
+                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getText()).slice(0, -1)
                 idCache = idUltimo;
 
                 var resultado = {
