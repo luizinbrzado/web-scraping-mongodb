@@ -48,9 +48,9 @@ var numeroUltimo = -987;
     let serviceBuilder = new chrome.ServiceBuilder(process.env.CHROME_DRIVER_PATH);
 
     //Don't forget to add these for heroku
-    options.addArguments("--headless");
-    options.addArguments("--disable-gpu");
-    options.addArguments("--no-sandbox");
+    // options.addArguments("--headless");
+    // options.addArguments("--disable-gpu");
+    // options.addArguments("--no-sandbox");
 
 
     let driver = new webdriver.Builder()
@@ -59,8 +59,12 @@ var numeroUltimo = -987;
         .setChromeService(serviceBuilder)
         .build();
 
-    await driver.get('https://blaze.com/pt/games/crash')
+    await driver.get('https://www.smashup.com/player_center/goto_common_game/5928/crash')
     await driver.manage().window().maximize()
+
+    await driver.findElement(webdriver.By.xpath('//*[@id="username"]')).sendKeys(process.env.USER_SMASH)
+    await driver.findElement(webdriver.By.xpath('//*[@id="password"]')).sendKeys(process.env.PASS_SMASH)
+    await driver.findElement(webdriver.By.xpath('//*[@id="login_now_btn"]')).click()
 
     await driver.sleep(5000)
     var idCache = '';
@@ -76,12 +80,12 @@ var numeroUltimo = -987;
         await driver.sleep(1000)
 
         try {
-            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getId()
+            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[2]')).getText()
 
             if (idUltimo !== idCache) {
                 await driver.sleep(2000)
 
-                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div/span[1]')).getText()).slice(0, -1)
+                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[3]')).getText()).slice(0, -1)
                 idCache = idUltimo;
 
                 var resultado = {
