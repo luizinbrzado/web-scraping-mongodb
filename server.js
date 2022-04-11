@@ -52,7 +52,6 @@ var numeroUltimo = -987;
     options.addArguments("--disable-gpu");
     options.addArguments("--no-sandbox");
 
-
     let driver = new webdriver.Builder()
         .forBrowser('chrome')
         .setChromeOptions(options)
@@ -69,47 +68,47 @@ var numeroUltimo = -987;
     await driver.sleep(5000)
     var idCache = '';
 
-    while (true) {
-        const now = new Date();
-        now.setUTCMilliseconds(-3600 * 3 * 1000);
+    // while (true) {
+    //     const now = new Date();
+    //     now.setUTCMilliseconds(-3600 * 3 * 1000);
 
-        if (now.toLocaleTimeString('pt-br') > '23:59:50') {
-            process.exit(0);
-        }
+    //     if (now.toLocaleTimeString('pt-br') > '23:59:50') {
+    //         process.exit(0);
+    //     }
 
-        await driver.sleep(1000)
+    //     await driver.sleep(1000)
 
-        try {
-            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[2]')).getText()
+    //     try {
+    //         var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[2]')).getText()
 
-            if (idUltimo !== idCache) {
-                await driver.sleep(2000)
+    //         if (idUltimo !== idCache) {
+    //             await driver.sleep(2000)
 
-                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[3]')).getText()).slice(0, -1)
-                idCache = idUltimo;
+    //             var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[3]')).getText()).slice(0, -1)
+    //             idCache = idUltimo;
 
-                var resultado = {
-                    "time": now.toLocaleTimeString('pt-br').slice(0, 5),
-                    "result": ultimoResultado
-                };
+    //             var resultado = {
+    //                 "time": now.toLocaleTimeString('pt-br').slice(0, 5),
+    //                 "result": ultimoResultado
+    //             };
 
-                request({
-                    url: `http://localhost:${port}/hoje`,
-                    method: "POST",
-                    json: true,   // <--Very important!!!
-                    body: resultado
-                }, function (error, response, body) {
-                });
+    //             request({
+    //                 url: `http://localhost:${port}/hoje`,
+    //                 method: "POST",
+    //                 json: true,   // <--Very important!!!
+    //                 body: resultado
+    //             }, function (error, response, body) {
+    //             });
 
-                console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
-            }
-        } catch (e) {
-            console.log(e);
-            console.log("Deu ruim");
-            process.exit(0);
-        }
+    //             console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
+    //         }
+    //     } catch (e) {
+    //         console.log(e);
+    //         console.log("Deu ruim");
+    //         process.exit(0);
+    //     }
 
-    }
+    // }
 })()
 
 setInterval(function () {
