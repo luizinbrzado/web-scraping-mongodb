@@ -61,54 +61,57 @@ var numeroUltimo = -987;
     await driver.get('https://www.smashup.com/player_center/goto_common_game/5928/crash')
     await driver.manage().window().maximize()
 
-    // await driver.findElement(webdriver.By.xpath('//*[@id="username"]')).sendKeys(process.env.USER_SMASH)
-    // await driver.findElement(webdriver.By.xpath('//*[@id="password"]')).sendKeys(process.env.PASS_SMASH)
-    // await driver.findElement(webdriver.By.xpath('//*[@id="login_now_btn"]')).click()
+    await driver.sleep(5000)
 
-    // await driver.sleep(5000)
-    // var idCache = '';
+    await driver.findElement(webdriver.By.xpath('//*[@id="username"]')).sendKeys(process.env.USER_SMASH)
+    await driver.findElement(webdriver.By.xpath('//*[@id="password"]')).sendKeys(process.env.PASS_SMASH)
+    await driver.findElement(webdriver.By.xpath('//*[@id="login_now_btn"]')).click()
 
-    // while (true) {
-    //     const now = new Date();
-    //     now.setUTCMilliseconds(-3600 * 3 * 1000);
+    await driver.sleep(5000)
+    
+    var idCache = '';
 
-    //     if (now.toLocaleTimeString('pt-br') > '23:59:50') {
-    //         process.exit(0);
-    //     }
+    while (true) {
+        const now = new Date();
+        now.setUTCMilliseconds(-3600 * 3 * 1000);
 
-    //     await driver.sleep(1000)
+        if (now.toLocaleTimeString('pt-br') > '23:59:50') {
+            process.exit(0);
+        }
 
-    //     try {
-    //         var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[2]')).getText()
+        await driver.sleep(1000)
 
-    //         if (idUltimo !== idCache) {
-    //             await driver.sleep(2000)
+        try {
+            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[2]')).getText()
 
-    //             var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[3]')).getText()).slice(0, -1)
-    //             idCache = idUltimo;
+            if (idUltimo !== idCache) {
+                await driver.sleep(2000)
 
-    //             var resultado = {
-    //                 "time": now.toLocaleTimeString('pt-br').slice(0, 5),
-    //                 "result": ultimoResultado
-    //             };
+                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[3]')).getText()).slice(0, -1)
+                idCache = idUltimo;
 
-    //             request({
-    //                 url: `http://localhost:${port}/hoje`,
-    //                 method: "POST",
-    //                 json: true,   // <--Very important!!!
-    //                 body: resultado
-    //             }, function (error, response, body) {
-    //             });
+                var resultado = {
+                    "time": now.toLocaleTimeString('pt-br').slice(0, 5),
+                    "result": ultimoResultado
+                };
 
-    //             console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
-    //         }
-    //     } catch (e) {
-    //         console.log(e);
-    //         console.log("Deu ruim");
-    //         process.exit(0);
-    //     }
+                request({
+                    url: `http://localhost:${port}/hoje`,
+                    method: "POST",
+                    json: true,   // <--Very important!!!
+                    body: resultado
+                }, function (error, response, body) {
+                });
 
-    // }
+                console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
+            }
+        } catch (e) {
+            console.log(e);
+            console.log("Deu ruim");
+            process.exit(0);
+        }
+
+    }
 })()
 
 setInterval(function () {
