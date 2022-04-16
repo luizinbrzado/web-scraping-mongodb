@@ -17,7 +17,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // define port to run express app
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 // use bodyParser middleware on express app
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -61,13 +61,13 @@ var numeroUltimo = -987;
     await driver.get('https://www.smashup.com/player_center/goto_common_game/5928/crash')
     await driver.manage().window().maximize()
 
-    await driver.sleep(30000)
+    await driver.sleep(10000)
 
     await driver.findElement(webdriver.By.xpath('//*[@id="username"]')).sendKeys(process.env.USER_SMASH)
     await driver.findElement(webdriver.By.xpath('//*[@id="password"]')).sendKeys(process.env.PASS_SMASH)
     await driver.findElement(webdriver.By.xpath('//*[@id="login_now_btn"]')).click()
 
-    await driver.sleep(30000)
+    await driver.sleep(10000)
 
     var idCache = '';
 
