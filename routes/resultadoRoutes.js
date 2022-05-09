@@ -18,6 +18,16 @@ module.exports = function (app) {
         .post(resultados.createNewToday);
 
     app
+        .route("/mes")
+        .get(resultados.listAllThisMonth)
+        .post(resultados.createNewMonth);
+
+    app
+        .route("/ultimo-mes")
+        .get(resultados.listAllLastMonth)
+        .post(resultados.createNewToday);
+
+    app
         .route("/ontem")
         .get(resultados.listAllYesterday)
 

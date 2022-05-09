@@ -22,4 +22,4 @@ const resultadoSchema = new Schema({
 });
 
 // create and export model
-module.exports = mongoose.model(`${now.toLocaleDateString('pt-br').replace(/\//g, '_')}`, resultadoSchema);
+module.exports = mongoose.model(`${now.toISOString().replace(/-/g, '_').slice(0, 10)}`, resultadoSchema);

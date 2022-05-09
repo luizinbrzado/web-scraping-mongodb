@@ -1,7 +1,7 @@
 'use strict';
 
-const yesterday = new Date();
-yesterday.setUTCMilliseconds(-3600 * 1000 * 27);
+const now = new Date();
+now.setUTCMilliseconds(-3600 * 1000 * 3);
 
 // Import mongoose
 const mongoose = require("mongoose");
@@ -22,4 +22,4 @@ const resultadoSchema = new Schema({
 });
 
 // create and export model
-module.exports = mongoose.model(`${yesterday.toISOString().replace(/-/g, '_').slice(0, 10)}`, resultadoSchema);
+module.exports = mongoose.model(`${now.toLocaleString('en-us', { month: 'long' }).replace('s', '')}`, resultadoSchema);

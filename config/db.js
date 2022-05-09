@@ -2,7 +2,7 @@
 const mongoose = require("mongoose");
 
 //Assign MongoDB connection string to Uri and declare options settings
-var uri = `mongodb+srv://webcrepe:${process.env.SENHA}@webscraperblaze.regju.mongodb.net/SmashCrash?retryWrites=true&w=majority`;
+var uri = `mongodb+srv://webcrepe:${process.env.SENHA}@webscraperblaze.regju.mongodb.net/BlazeCrashNovo?retryWrites=true&w=majority`;
 
 // Declare a variable named option and assign optional settings
 const options = {

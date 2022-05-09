@@ -58,16 +58,10 @@ var numeroUltimo = -987;
         .setChromeService(serviceBuilder)
         .build();
 
-    await driver.get('https://www.smashup.com/player_center/goto_common_game/5928/crash')
+    await driver.get('https://blaze.com/pt/games/crash')
     await driver.manage().window().maximize()
 
-    await driver.sleep(10000)
-
-    await driver.findElement(webdriver.By.xpath('//*[@id="username"]')).sendKeys(process.env.USER_SMASH)
-    await driver.findElement(webdriver.By.xpath('//*[@id="password"]')).sendKeys(process.env.PASS_SMASH)
-    await driver.findElement(webdriver.By.xpath('//*[@id="login_now_btn"]')).click()
-
-    await driver.sleep(10000)
+    await driver.sleep(5000)
 
     var idCache = '';
 
@@ -75,19 +69,15 @@ var numeroUltimo = -987;
         const now = new Date();
         now.setUTCMilliseconds(-3600 * 3 * 1000);
 
-        if (now.toLocaleTimeString('pt-br') > '23:59:50') {
-            process.exit(0);
-        }
-
-        await driver.sleep(1000)
+        await driver.sleep(500)
 
         try {
-            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[2]')).getText()
+            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getId() + await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getText()
 
             if (idUltimo !== idCache) {
                 await driver.sleep(2000)
 
-                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="desktop"]/div[2]/div/div[2]/div[1]/div/span[3]')).getText()).slice(0, -1)
+                var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getText()).slice(0, -1)
                 idCache = idUltimo;
 
                 var resultado = {
@@ -103,17 +93,52 @@ var numeroUltimo = -987;
                 }, function (error, response, body) {
                 });
 
+                request({
+                    url: `http://localhost:${port}/mes`,
+                    method: "POST",
+                    json: true,   // <--Very important!!!
+                    body: resultado
+                }, function (error, response, body) {
+                });
+
                 console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
             }
         } catch (e) {
             console.log(e);
             console.log("Deu ruim");
-            process.exit(0);
+
+            await driver.sleep(2000)
+
+            var ultimoResultado = (await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getText()).slice(0, -1)
+            idCache = idUltimo;
+
+            var resultado = {
+                "time": now.toLocaleTimeString('pt-br').slice(0, 5),
+                "result": ultimoResultado
+            };
+
+            request({
+                url: `http://localhost:${port}/hoje`,
+                method: "POST",
+                json: true,   // <--Very important!!!
+                body: resultado
+            }, function (error, response, body) {
+            });
+
+            request({
+                url: `http://localhost:${port}/mes`,
+                method: "POST",
+                json: true,   // <--Very important!!!
+                body: resultado
+            }, function (error, response, body) {
+            });
+
+            console.log("Adicionando", ultimoResultado, now.toLocaleTimeString('pt-br').slice(0, 5));
         }
 
     }
 })()
 
-setInterval(function () {
-    https.get("https://webcrepe-mongodb.herokuapp.com");
-}, 20 * 60 * 1000); // every 20 minutes
+// setInterval(function () {
+//     https.get("https://webcrepe-mongodb.herokuapp.com");
+// }, 20 * 60 * 1000); // every 20 minutes

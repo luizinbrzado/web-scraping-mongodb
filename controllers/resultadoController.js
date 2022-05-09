@@ -1,5 +1,7 @@
 // import Model
 const Resultado = require("../models/resultadoModel.js");
+const Mes = require("../models/mesModel.js");
+const UltimoMes = require("../models/mesAnteriorModel.js");
 const Hoje = require("../models/hojeModel.js");
 const Ontem = require("../models/ontemModel.js");
 
@@ -15,6 +17,34 @@ exports.listAll = (req, res) => {
     res.setHeader('Access-Control-Allow-Credentials', true); // If needed
 
     Resultado.find({}, (err, todo) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.status(200).json(todo);
+    });
+};
+
+exports.listAllThisMonth = (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+
+    Mes.find({}, (err, todo) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.status(200).json(todo);
+    });
+};
+
+exports.listAllLastMonth = (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    res.setHeader('Access-Control-Allow-Credentials', true); // If needed
+
+    UltimoMes.find({}, (err, todo) => {
         if (err) {
             res.status(500).send(err);
         }
@@ -89,6 +119,16 @@ exports.createNew = (req, res) => {
 exports.createNewToday = (req, res) => {
     let newHoje = new Hoje(req.body);
     newHoje.save((err, todo) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.status(201).json(todo);
+    });
+};
+
+exports.createNewMonth = (req, res) => {
+    let newMes = new Mes(req.body);
+    newMes.save((err, todo) => {
         if (err) {
             res.status(500).send(err);
         }
