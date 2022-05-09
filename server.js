@@ -59,7 +59,7 @@ var numeroUltimo = -987;
         .build();
 
     await driver.get('https://blaze.com/pt/games/crash')
-    await driver.manage().window().maximize()
+    await driver.manage().window().setSize(1920, 1080)
 
     await driver.sleep(10000)
 
