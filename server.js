@@ -49,8 +49,8 @@ var numeroUltimo = -987;
 
     //Don't forget to add these for heroku
     options.addArguments("--headless");
-    // options.addArguments("--disable-gpu");
-    // options.addArguments("--no-sandbox");
+    options.addArguments("--disable-gpu");
+    options.addArguments("--no-sandbox");
     options.addArguments("--window-size=1920,1080")
 
     let driver = new webdriver.Builder()
