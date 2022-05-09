@@ -61,7 +61,7 @@ var numeroUltimo = -987;
 
     await driver.get('https://blaze.com/pt/games/crash')
 
-    await driver.sleep(10000)
+    await driver.sleep(15000)
 
     var idCache = '';
 
