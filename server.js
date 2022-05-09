@@ -51,7 +51,6 @@ var numeroUltimo = -987;
     options.addArguments("--headless");
     options.addArguments("--disable-gpu");
     options.addArguments("--no-sandbox");
-    options.addArguments("--window-size=1920,1080")
 
     let driver = new webdriver.Builder()
         .forBrowser('chrome')
@@ -60,10 +59,10 @@ var numeroUltimo = -987;
         .build();
 
     await driver.get('https://blaze.com/pt/games/crash')
+    await driver.manage().window().maximize()
 
-    await driver.sleep(15000)
+    await driver.sleep(5000)
 
-    console.log(await driver.findElement(webdriver.By.xpath('/html')).getText());
     var idCache = '';
 
     while (true) {
@@ -73,7 +72,7 @@ var numeroUltimo = -987;
         await driver.sleep(500)
 
         try {
-            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getId()
+            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getId() + await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getText()
 
             if (idUltimo !== idCache) {
                 await driver.sleep(2000)
