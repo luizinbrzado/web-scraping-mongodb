@@ -48,7 +48,7 @@ var numeroUltimo = -987;
     let serviceBuilder = new chrome.ServiceBuilder(process.env.CHROME_DRIVER_PATH);
 
     //Don't forget to add these for heroku
-    // options.addArguments("--headless");
+    options.addArguments("--headless");
     // options.addArguments("--disable-gpu");
     // options.addArguments("--no-sandbox");
     options.addArguments("--window-size=1920,1080")
