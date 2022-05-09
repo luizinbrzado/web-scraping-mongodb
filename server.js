@@ -48,9 +48,9 @@ var numeroUltimo = -987;
     let serviceBuilder = new chrome.ServiceBuilder(process.env.CHROME_DRIVER_PATH);
 
     //Don't forget to add these for heroku
-    options.addArguments("--headless");
-    options.addArguments("--disable-gpu");
-    options.addArguments("--no-sandbox");
+    // options.addArguments("--headless");
+    // options.addArguments("--disable-gpu");
+    // options.addArguments("--no-sandbox");
     options.addArguments("--window-size=1920,1080")
 
     let driver = new webdriver.Builder()
@@ -63,6 +63,7 @@ var numeroUltimo = -987;
 
     await driver.sleep(15000)
 
+    console.log(await driver.findElement(webdriver.By.xpath('//*[@id="crash-controller"]/div[1]/div[1]/div[1]')).getText());
     var idCache = '';
 
     while (true) {
@@ -72,7 +73,7 @@ var numeroUltimo = -987;
         await driver.sleep(500)
 
         try {
-            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getId() + await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getText()
+            var idUltimo = await driver.findElement(webdriver.By.xpath('//*[@id="crash-recent"]/div[2]/div[2]/span[1]')).getId()
 
             if (idUltimo !== idCache) {
                 await driver.sleep(2000)
