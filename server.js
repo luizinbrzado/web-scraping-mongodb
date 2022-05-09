@@ -63,7 +63,7 @@ var numeroUltimo = -987;
 
     await driver.sleep(15000)
 
-    console.log(await driver.findElement(webdriver.By.xpath('//*[@id="crash-controller"]/div[1]/div[1]/div[1]')).getText());
+    console.log(await driver.findElement(webdriver.By.xpath('/html')).getText());
     var idCache = '';
 
     while (true) {
